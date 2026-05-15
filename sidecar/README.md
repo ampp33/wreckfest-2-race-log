@@ -1,7 +1,7 @@
-# Wreckfest Race Log — Sidecar (OCR edition)
+# Wreckfest 2 Race Log — Sidecar (OCR edition)
 
 Captures the Wreckfest screen at 1 fps, reads track/tune/result info via OCR,
-and automatically submits race results to your Wreckfest Race Log account.
+and automatically submits race results to your Wreckfest 2 Race Log account.
 
 No admin rights needed — no memory reading involved.
 
@@ -45,7 +45,7 @@ context from the event + tune screens and posts a race entry via the API.
 
 3. **Get your API key from the web app**
 
-   Open Wreckfest Race Log → **API Keys** → Generate key, copy it (shown once).
+   Open Wreckfest 2 Race Log → **API Keys** → Generate key, copy it (shown once).
 
 4. **Edit `config.json`**
 

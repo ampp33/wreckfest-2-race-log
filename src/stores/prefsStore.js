@@ -4,7 +4,6 @@ const STORAGE_KEY = 'wreckfest:prefs'
 
 const defaults = {
   lastVehicleId: null,
-  lastTuning: null,
   lastTrackVariationId: null,
   darkMode: false
 }

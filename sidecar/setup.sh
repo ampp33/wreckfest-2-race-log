@@ -2,7 +2,7 @@
 set -euo pipefail
 
 echo "============================================================"
-echo " Wreckfest Race Log Sidecar — Setup"
+echo " Wreckfest 2 Race Log Sidecar — Setup"
 echo "============================================================"
 echo
 

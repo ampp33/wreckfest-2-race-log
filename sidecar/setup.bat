@@ -1,9 +1,9 @@
 @echo off
 setlocal enabledelayedexpansion
-title Wreckfest Race Log — Sidecar Setup
+title Wreckfest 2 Race Log — Sidecar Setup
 
 echo ============================================================
-echo  Wreckfest Race Log Sidecar — Setup
+echo  Wreckfest 2 Race Log Sidecar — Setup
 echo ============================================================
 echo.
 

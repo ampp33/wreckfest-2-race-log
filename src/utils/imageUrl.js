@@ -20,3 +20,8 @@ export function trackImageUrl(slug) {
 export function variationImageUrl(trackSlug, variationSlug) {
   return resolveImageUrl(`track-variation-images/${trackSlug}--${variationSlug}.png`)
 }
+
+// Derives the local variation layout/map-diagram path from track + variation slugs.
+export function variationLayoutUrl(trackSlug, variationSlug) {
+  return resolveImageUrl(`track-variation-layouts/${trackSlug}--${variationSlug}.png`)
+}

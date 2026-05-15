@@ -10,7 +10,7 @@ def _use_venv():
 _use_venv()
 
 """
-Wreckfest Race Log — screenshot sidecar.
+Wreckfest 2 Race Log — screenshot sidecar.
 
 Captures the screen at a configurable interval, classifies the Wreckfest UI
 screen, and collects race context across screens:
@@ -47,7 +47,7 @@ def _slug(text: str) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Wreckfest Race Log sidecar")
+    parser = argparse.ArgumentParser(description="Wreckfest 2 Race Log sidecar")
     parser.add_argument("--config", default="config.json")
     args = parser.parse_args()
 
@@ -63,7 +63,7 @@ def main() -> None:
     track_map: dict[str, str] = config.get("track_name_to_slug", {})
     var_map:   dict[str, str] = config.get("variation_name_to_slug", {})
 
-    print(f"Wreckfest Race Log sidecar — capturing every {interval_s}s")
+    print(f"Wreckfest 2 Race Log sidecar — capturing every {interval_s}s")
     print(f"Username: {username}   Monitor: {monitor_idx}")
     print("Press Ctrl-C to stop.\n")
 

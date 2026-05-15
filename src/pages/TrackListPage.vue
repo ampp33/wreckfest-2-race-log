@@ -108,7 +108,6 @@ export default {
           datetime: r.datetime,
           track_variation_id: r.track_variation_id,
           vehicle_id: r.vehicle_id || null,
-          tuning: r.tuning ?? null,
           place: r.place || null,
           lap_time_ms: r.lap_time_ms ?? null,
           total_time_ms: r.total_time_ms ?? null,

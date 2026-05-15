@@ -5,7 +5,6 @@
         {{ formattedDate }}
       </td>
       <td class="py-2 pr-3 text-brand-secondary dark:text-brand-secondary-dark">{{ vehicleName }}</td>
-      <td class="py-2 pr-3 text-center text-brand-secondary dark:text-brand-secondary-dark">{{ race.tuning ?? '—' }}</td>
       <td class="py-2 pr-3 text-center text-brand-secondary dark:text-brand-secondary-dark">{{ race.place || '—' }}</td>
       <td class="py-2 pr-3 font-mono text-brand-text dark:text-brand-text-dark">{{ formatLap }}</td>
       <td class="py-2 pr-3 font-mono" :class="deltaColor">{{ deltaLabel }}</td>
@@ -37,7 +36,7 @@
       </td>
     </template>
 
-    <td v-else colspan="9" class="p-5 bg-brand-surface dark:bg-brand-surface-dark">
+    <td v-else colspan="8" class="p-5 bg-brand-surface dark:bg-brand-surface-dark">
       <RaceForm
         :vehicles="vehicles"
         :defaults="editDefaults"
@@ -115,7 +114,6 @@ export default {
       return {
         datetime: toLocalIsoMinute(this.race.datetime),
         vehicleId: this.race.vehicle_id,
-        tuning: this.race.tuning,
         place: this.race.place || '',
         lapTime: this.race.lap_time_ms != null ? formatMsToTime(this.race.lap_time_ms) : '',
         totalTime: this.race.total_time_ms != null ? formatMsToTime(this.race.total_time_ms) : '',

@@ -1,4 +1,4 @@
-# Wreckfest Race Log
+# Wreckfest 2 Race Log
 
 A keyboard-first race log for the racing game **Wreckfest**. The app is designed
 to be ALT+TABbed into between races: hit `Q`, type the track name, fill four

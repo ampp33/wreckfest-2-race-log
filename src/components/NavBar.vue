@@ -5,7 +5,7 @@
         to="/"
         class="font-display font-black tracking-tighter leading-none text-brand-text dark:text-brand-text-dark text-xl"
       >
-        Wreckfest Race <em class="signal">Log</em>
+        Wreckfest <em class="signal">2</em> Race <em class="signal">Log</em>
       </router-link>
 
       <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-sm font-body">
@@ -31,13 +31,13 @@
         >
           Stats
         </router-link>
-        <router-link
+        <!-- <router-link
           to="/settings/api-keys"
           class="hover:text-brand-accent"
           active-class="text-brand-accent font-semibold"
         >
           API Keys
-        </router-link>
+        </router-link> -->
 
         <div v-if="auth.isAdmin" class="relative group">
           <button

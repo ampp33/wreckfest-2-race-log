@@ -35,7 +35,7 @@
         <div class="mb-4 flex items-center justify-between gap-3 text-sm">
           <div class="flex items-center gap-3 min-w-0">
             <img
-              :src="variationImageUrl(chosen.track.slug, chosen.variation.slug)"
+              :src="variationLayoutUrl(chosen.track.slug, chosen.variation.slug)"
               :alt="chosen.variation.name"
               class="w-16 h-12 object-contain bg-black rounded shrink-0"
               loading="lazy"
@@ -70,7 +70,7 @@
 <script>
 import TrackVariationPicker from './TrackVariationPicker.vue'
 import RaceForm from './RaceForm.vue'
-import { variationImageUrl } from '../utils/imageUrl.js'
+import { variationLayoutUrl } from '../utils/imageUrl.js'
 import { quickAddStore, closeQuickAdd, notifyRaceSaved } from '../stores/quickAddStore.js'
 import { prefsStore } from '../stores/prefsStore.js'
 import { authStore } from '../stores/authStore.js'
@@ -96,8 +96,7 @@ export default {
   computed: {
     formDefaults() {
       return {
-        vehicleId: prefsStore.lastVehicleId,
-        tuning: prefsStore.lastTuning
+        vehicleId: prefsStore.lastVehicleId
       }
     }
   },
@@ -116,7 +115,7 @@ export default {
     document.body.style.overflow = ''
   },
   methods: {
-    variationImageUrl,
+    variationLayoutUrl,
     async onOpened() {
       this.loadingTracks = true
       try {
@@ -174,7 +173,6 @@ export default {
           userId
         )
         prefsStore.lastVehicleId = created.vehicle_id
-        prefsStore.lastTuning = created.tuning
         prefsStore.lastTrackVariationId = created.track_variation_id
         pushToast('Race saved', 'success', 2000)
         notifyRaceSaved(this.chosen.variation.id)

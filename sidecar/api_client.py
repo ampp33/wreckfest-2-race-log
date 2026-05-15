@@ -1,5 +1,5 @@
 """
-Submits a completed race to the Wreckfest Race Log via the Supabase RPC endpoint.
+Submits a completed race to the Wreckfest 2 Race Log via the Supabase RPC endpoint.
 """
 
 import requests

@@ -30,7 +30,7 @@
         @mousedown.prevent="selectItem(item)"
       >
         <img
-          :src="variationImageUrl(item.track.slug, item.variation.slug)"
+          :src="variationLayoutUrl(item.track.slug, item.variation.slug)"
           :alt="item.variation.name"
           class="w-12 h-9 object-contain bg-black rounded shrink-0"
           loading="lazy"
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { variationImageUrl } from '../utils/imageUrl.js'
+import { variationLayoutUrl } from '../utils/imageUrl.js'
 
 export default {
   name: 'TrackVariationPicker',
@@ -94,7 +94,7 @@ export default {
     if (this.autofocus) this.focus()
   },
   methods: {
-    variationImageUrl,
+    variationLayoutUrl,
     focus() {
       this.$nextTick(() => this.$refs.searchInput && this.$refs.searchInput.focus())
     },

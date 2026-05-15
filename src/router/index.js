@@ -20,7 +20,7 @@ const routes = [
   },
   { path: '/races', name: 'races', component: RacesPage },
   { path: '/stats', name: 'stats', component: StatsPage },
-  { path: '/settings/api-keys', name: 'api-keys', component: ApiKeysPage },
+  // { path: '/settings/api-keys', name: 'api-keys', component: ApiKeysPage },
   { path: '/admin/diagnostics', name: 'admin-diagnostics', component: DiagnosticsPage, meta: { requiresAdmin: true } },
   { path: '/admin/users', name: 'admin-users', component: UserRolesPage, meta: { requiresAdmin: true } },
   { path: '/:pathMatch(.*)*', redirect: '/' }

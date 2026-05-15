@@ -1,7 +1,7 @@
 import { supabase } from './supabase.js'
 
 const RACE_COLUMNS =
-  'id, datetime, track_variation_id, vehicle_id, tuning, place, lap_time_ms, total_time_ms, notes, created_at'
+  'id, datetime, track_variation_id, vehicle_id, place, lap_time_ms, total_time_ms, notes, created_at'
 
 export async function getRacesByVariation(variationId) {
   const { data, error } = await supabase

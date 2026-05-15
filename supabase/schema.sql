@@ -68,13 +68,15 @@ create table if not exists wreckfest2.races (
     datetime timestamptz not null default now(),
     track_variation_id uuid not null references wreckfest2.track_variations(id) on delete cascade,
     vehicle_id uuid references wreckfest2.vehicles(id) on delete set null,
-    tuning integer,
     place text,
     lap_time_ms integer,
     total_time_ms integer,
     notes text,
     created_at timestamptz not null default now()
 );
+
+-- For existing installs: drop the tuning column if it exists.
+alter table wreckfest2.races drop column if exists tuning;
 
 create index if not exists races_user_track_idx
     on wreckfest2.races (user_id, track_variation_id, datetime desc);
@@ -512,7 +514,6 @@ create or replace function wreckfest2.insert_race_with_api_key(
     p_place          text,
     p_lap_time_ms    integer,
     p_total_time_ms  integer,
-    p_tuning         integer,
     p_datetime       timestamptz default now()
 )
 returns json
@@ -562,10 +563,10 @@ begin
     -- Insert race bypassing RLS (security definer).
     insert into wreckfest2.races (
         user_id, track_variation_id, vehicle_id,
-        place, lap_time_ms, total_time_ms, tuning, datetime
+        place, lap_time_ms, total_time_ms, datetime
     ) values (
         v_user_id, v_track_variation_id, v_vehicle_id,
-        p_place, p_lap_time_ms, p_total_time_ms, p_tuning, p_datetime
+        p_place, p_lap_time_ms, p_total_time_ms, p_datetime
     )
     returning id into v_race_id;
 

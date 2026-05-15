@@ -11,9 +11,10 @@
       <!-- Hero banner -->
       <img
         v-if="track"
-        :src="trackImage"
+        :src="heroImage"
         :alt="track.name"
         class="w-full h-40 sm:h-56 object-cover rounded border border-brand-border dark:border-brand-border-dark mb-2 cursor-pointer hover:opacity-90 transition-opacity"
+        @error="onHeroImageError"
         @click="openImageModal"
       />
 
@@ -35,7 +36,7 @@
                 : 'border-brand-border dark:border-brand-border-dark hover:border-brand-accent'"
             >
               <img
-                :src="variationImageUrl(track.slug, v.slug)"
+                :src="variationLayoutUrl(track.slug, v.slug)"
                 alt=""
                 aria-hidden="true"
                 class="w-8 h-6 object-contain bg-black rounded"
@@ -138,7 +139,6 @@
             <tr>
               <th class="py-2 pl-3 pr-3">When</th>
               <th class="py-2 pr-3">Vehicle</th>
-              <th class="py-2 pr-3 text-center">Tune</th>
               <th class="py-2 pr-3 text-center">Place</th>
               <th class="py-2 pr-3">Lap</th>
               <th class="py-2 pr-3">Δ goal</th>
@@ -188,7 +188,7 @@
           </svg>
         </button>
         <img
-          :src="trackImage"
+          :src="heroImage"
           :alt="track && track.name"
           class="w-full max-h-[85vh] object-contain rounded"
         />
@@ -213,7 +213,7 @@ import { pushToast } from '../stores/toastStore.js'
 import { quickAddStore, setOnRaceSaved, clearOnRaceSaved, openQuickAdd } from '../stores/quickAddStore.js'
 import { formatMsToTime } from '../utils/timeFormat.js'
 import LapTimeInput from '../components/LapTimeInput.vue'
-import { trackImageUrl, variationImageUrl } from '../utils/imageUrl.js'
+import { trackImageUrl, variationImageUrl, variationLayoutUrl } from '../utils/imageUrl.js'
 
 export default {
   name: 'TrackDetailPage',
@@ -231,12 +231,17 @@ export default {
       quickAddStore,
       showImageModal: false,
       notesEditMode: false,
-      notesInput: ''
+      notesInput: '',
+      heroImageFailed: false
     }
   },
   computed: {
-    trackImage() {
-      return this.track ? trackImageUrl(this.track.slug) : ''
+    heroImage() {
+      if (!this.track) return ''
+      if (this.currentVariation && !this.heroImageFailed) {
+        return variationImageUrl(this.track.slug, this.currentVariation.slug)
+      }
+      return trackImageUrl(this.track.slug)
     },
     goalLapTimeMs() {
       return this.goal ? this.goal.goal_lap_time_ms : null
@@ -260,7 +265,7 @@ export default {
     },
     variationMapImage() {
       return this.track && this.currentVariation
-        ? variationImageUrl(this.track.slug, this.currentVariation.slug)
+        ? variationLayoutUrl(this.track.slug, this.currentVariation.slug)
         : ''
     }
   },
@@ -295,8 +300,13 @@ export default {
   },
   methods: {
     variationImageUrl,
+    variationLayoutUrl,
+    onHeroImageError() {
+      this.heroImageFailed = true
+    },
     async loadAll() {
       this.loading = true
+      this.heroImageFailed = false
       const slug = this.$route.params.trackSlug
       const variationSlug = this.$route.params.variationSlug
       try {
