@@ -1,0 +1,24 @@
+{
+  "supabase_url":     "https://YOUR_PROJECT.supabase.co",
+  "supabase_anon_key": "YOUR_ANON_KEY",
+  "api_key":           "YOUR_API_KEY_FROM_APP",
+
+  "username":           "Ampp33",
+  "capture_interval_s": 1.0,
+  "monitor_index":      1,
+
+  "track_name_to_slug": {
+    "VALE FALLS CIRCUIT": "vale-falls-circuit",
+    "CLAYRIDGE CIRCUIT":  "clayridge-circuit",
+    "BIG VALLEY SPEEDWAY": "big-valley-speedway"
+  },
+
+  "variation_name_to_slug": {
+    "MAIN CIRCUIT":         "main-circuit",
+    "MAIN CIRCUIT REVERSE": "main-circuit-reverse",
+    "FIGURE 8":             "figure-8",
+    "OVAL":                 "oval"
+  },
+
+  "regions": null
+}

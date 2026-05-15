@@ -1,0 +1,33 @@
+/* Oblique design system: em.signal = italic + 900 + accent color.
+   One per heading, everywhere, no exceptions. */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#app {
+  min-height: 100vh;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Disable layout-shifting transitions while still letting Tailwind's
+ * `transition` utilities work where intentionally applied. The spec asks
+ * for "minimal animations" in service of fast input. */
+* {
+  transition-duration: 100ms;
+}
+
+::selection {
+  background-color: rgba(196, 30, 30, 0.3);
+}
+
+em.signal {
+  font-style: italic;
+  font-weight: 900;
+  color: theme('colors.brand.accent.DEFAULT');
+}
