@@ -2,7 +2,7 @@
   <div class="min-h-screen flex items-center justify-center px-6">
     <div class="bg-brand-surface dark:bg-brand-surface-dark rounded border border-brand-border dark:border-brand-border-dark p-6 sm:p-8 w-full max-w-md">
       <h1 class="font-display font-black tracking-tighter leading-none text-display-lg text-brand-text dark:text-brand-text-dark mb-3">
-        🏁 Wreckfest 2 Race <em class="signal">Log</em>
+        Wreckfest 2 Race <em class="signal">Log</em>
       </h1>
       <p class="font-body text-[15px] leading-relaxed text-brand-secondary dark:text-brand-secondary-dark mb-6">
         {{ mode === 'signin' ? 'Sign in to log your races.' : 'Create an account to start logging races.' }}
