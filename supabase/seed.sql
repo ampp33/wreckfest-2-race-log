@@ -25,7 +25,7 @@ where tv.track_id = t.id and t.slug = 'uk-banger-1' and tv.slug = 'derby';
 insert into wreckfest2.tracks (name, slug) values ('Cannonhill', 'cannonhill') on conflict (slug) do update set name = excluded.name;
 insert into wreckfest2.tracks (name, slug) values ('Crash Canyon', 'crash-canyon') on conflict (slug) do update set name = excluded.name;
 insert into wreckfest2.tracks (name, slug) values ('Dalsbanen', 'dalsbanen') on conflict (slug) do update set name = excluded.name;
-insert into wreckfest2.tracks (name, slug) values ('European Rallycross 1', 'european-rallycross-1') on conflict (slug) do update set name = excluded.name;
+insert into wreckfest2.tracks (name, slug) values ('European Rallycross', 'european-rallycross-1') on conflict (slug) do update set name = excluded.name;
 insert into wreckfest2.tracks (name, slug) values ('FinnCross Circuit', 'finncross-circuit') on conflict (slug) do update set name = excluded.name;
 insert into wreckfest2.tracks (name, slug) values ('Moorfeld', 'moorfeld') on conflict (slug) do update set name = excluded.name;
 insert into wreckfest2.tracks (name, slug) values ('Savolax Sandpit', 'savolax-sandpit') on conflict (slug) do update set name = excluded.name;
