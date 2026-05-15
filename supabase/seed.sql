@@ -31,7 +31,7 @@ insert into wreckfest2.tracks (name, slug) values ('Moorfeld', 'moorfeld') on co
 insert into wreckfest2.tracks (name, slug) values ('Savolax Sandpit', 'savolax-sandpit') on conflict (slug) do update set name = excluded.name;
 insert into wreckfest2.tracks (name, slug) values ('Scrapyard', 'scrapyard') on conflict (slug) do update set name = excluded.name;
 insert into wreckfest2.tracks (name, slug) values ('Speedway', 'speedway') on conflict (slug) do update set name = excluded.name;
-insert into wreckfest2.tracks (name, slug) values ('UK Banger 1', 'uk-banger-1') on conflict (slug) do update set name = excluded.name;
+insert into wreckfest2.tracks (name, slug) values ('UK Banger', 'uk-banger-1') on conflict (slug) do update set name = excluded.name;
 
 -- Track variations ------------------------------------------------------
 insert into wreckfest2.track_variations (track_id, name, slug) select id, 'Main circuit', 'main-circuit' from wreckfest2.tracks where slug = 'cannonhill' on conflict (track_id, slug) do update set name = excluded.name;
