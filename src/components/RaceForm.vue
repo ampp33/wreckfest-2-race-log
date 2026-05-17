@@ -13,7 +13,7 @@
         />
       </div>
 
-      <div>
+      <div class="col-span-2">
         <label class="block font-body font-medium uppercase tracking-widest text-[11px] text-brand-muted dark:text-brand-muted-dark mb-1">
           Vehicle
         </label>
@@ -45,7 +45,7 @@
 
       <div>
         <label class="block font-body font-medium uppercase tracking-widest text-[11px] text-brand-muted dark:text-brand-muted-dark mb-1">
-          Lap time
+          Lap time<template v-if="goalLapTimeMs"> (Goal - {{ formatMsToTime(goalLapTimeMs) }})</template>
         </label>
         <LapTimeInput v-model="form.lapTimeMs" />
       </div>
@@ -97,6 +97,7 @@
 
 <script>
 import LapTimeInput from './LapTimeInput.vue'
+import { formatMsToTime } from '../utils/timeFormat.js'
 
 function nowLocalIsoMinute() {
   const d = new Date()
@@ -123,6 +124,7 @@ export default {
     vehicles: { type: Array, required: true },
     defaults: { type: Object, default: () => ({}) },
     lastRace: { type: Object, default: null },
+    goalLapTimeMs: { type: Number, default: null },
     saving: { type: Boolean, default: false },
     autofocus: { type: Boolean, default: true }
   },
@@ -145,6 +147,7 @@ export default {
     this.autoExpand()
   },
   methods: {
+    formatMsToTime,
     onFormKeydown(event) {
       if (event.key === 'Escape') {
         event.preventDefault()

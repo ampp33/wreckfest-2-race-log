@@ -58,6 +58,7 @@
           :vehicles="vehicles"
           :defaults="formDefaults"
           :last-race="lastRace"
+          :goal-lap-time-ms="goalLapTimeMs"
           :saving="saving"
           @submit="onSaveRace"
           @cancel="onClose"
@@ -77,6 +78,7 @@ import { authStore } from '../stores/authStore.js'
 import { getTracks } from '../services/trackService.js'
 import { getVehicles } from '../services/vehicleService.js'
 import { createRace, getRacesByVariation } from '../services/raceService.js'
+import { getGoalForVariation } from '../services/goalService.js'
 import { pushToast } from '../stores/toastStore.js'
 
 export default {
@@ -90,7 +92,8 @@ export default {
       loadingTracks: false,
       saving: false,
       chosen: null,
-      lastRace: null
+      lastRace: null,
+      goalLapTimeMs: null
     }
   },
   computed: {
@@ -143,19 +146,26 @@ export default {
     async onTrackSelected({ track, variation }) {
       this.chosen = { track, variation }
       try {
-        const races = await getRacesByVariation(variation.id)
+        const [races, goal] = await Promise.all([
+          getRacesByVariation(variation.id),
+          getGoalForVariation(variation.id)
+        ])
         this.lastRace = races[0] || null
+        this.goalLapTimeMs = goal ? goal.goal_lap_time_ms : null
       } catch {
         this.lastRace = null
+        this.goalLapTimeMs = null
       }
     },
     resetChoice() {
       this.chosen = null
       this.lastRace = null
+      this.goalLapTimeMs = null
     },
     resetState() {
       this.chosen = null
       this.lastRace = null
+      this.goalLapTimeMs = null
       this.saving = false
     },
     async onSaveRace(racePayload) {

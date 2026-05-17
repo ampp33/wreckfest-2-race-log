@@ -31,3 +31,7 @@ em.signal {
   font-weight: 900;
   color: theme('colors.brand.accent.DEFAULT');
 }
+
+.dark input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}

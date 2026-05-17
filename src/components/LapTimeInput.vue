@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center rounded border px-2 py-1.5 gap-px cursor-text w-full bg-brand-bg dark:bg-brand-surface-dark"
+    class="flex items-center rounded border px-2 py-2 gap-px cursor-text w-full bg-brand-bg dark:bg-brand-surface-dark"
     :class="focused
       ? 'border-brand-accent ring-1 ring-brand-accent'
       : 'border-brand-border dark:border-brand-border-dark'"
