@@ -30,14 +30,14 @@ import { prefsStore } from '../stores/prefsStore.js'
 Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend, Filler)
 
 const PALETTE = [
-  '#C41E1E', // brand accent
-  '#3b82f6', // blue
-  '#22c55e', // green
-  '#f59e0b', // amber
-  '#8b5cf6', // violet
-  '#ec4899', // pink
-  '#14b8a6', // teal
-  '#f97316', // orange
+  '#C41E1E', // brand red
+  '#E55555', // light red
+  '#8B1212', // dark crimson
+  '#F97316', // vivid orange
+  '#FB923C', // light orange
+  '#C05308', // burnt orange
+  '#999999', // light gray
+  '#666666', // dark gray
 ]
 
 function formatMs(ms) {
@@ -147,27 +147,40 @@ export default {
       const tickColor = dark ? '#B4B2A9' : '#5F5E5A'
       const legendColor = dark ? '#F5F4F0' : '#444441'
 
+      const inlineLabels = {
+        id: 'inlineLabels',
+        afterDatasetsDraw(chart) {
+          const { ctx } = chart
+          ctx.save()
+          ctx.font = '500 11px system-ui, sans-serif'
+          ctx.textAlign = 'left'
+          ctx.textBaseline = 'middle'
+          chart.data.datasets.forEach((dataset, i) => {
+            const meta = chart.getDatasetMeta(i)
+            if (meta.hidden) return
+            let lastPoint = null
+            for (let j = meta.data.length - 1; j >= 0; j--) {
+              if (meta.data[j] && !meta.data[j].skip) { lastPoint = meta.data[j]; break }
+            }
+            if (!lastPoint) return
+            ctx.fillStyle = dataset.borderColor
+            ctx.fillText(dataset.label, lastPoint.x + 8, lastPoint.y)
+          })
+          ctx.restore()
+        }
+      }
+
       this.chart = markRaw(new Chart(this.$refs.canvas, {
         type: 'line',
         data: this.chartData,
+        plugins: [inlineLabels],
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
+          layout: { padding: { right: 90 } },
+          interaction: { mode: 'nearest', intersect: false },
           plugins: {
-            legend: {
-              position: 'top',
-              align: 'start',
-              labels: {
-                color: legendColor,
-                boxWidth: 10,
-                boxHeight: 10,
-                borderRadius: 3,
-                useBorderRadius: true,
-                padding: 20,
-                font: { size: 12, weight: '500' }
-              }
-            },
+            legend: { display: false },
             tooltip: {
               backgroundColor: dark ? '#222220' : '#fff',
               borderColor: dark ? '#383836' : '#C8C6BF',
