@@ -13,20 +13,47 @@
         />
       </div>
 
-      <div class="col-span-2">
+      <div>
         <label class="block font-body font-medium uppercase tracking-widest text-[11px] text-brand-muted dark:text-brand-muted-dark mb-1">
           Vehicle
         </label>
-        <select
-          ref="vehicleInput"
-          v-model="form.vehicleId"
-          class="w-full h-10 rounded border border-brand-border dark:border-brand-border-dark bg-brand-bg dark:bg-brand-surface-dark px-3 py-2"
-        >
-          <option :value="null">— none —</option>
-          <option v-for="v in vehicles" :key="v.id" :value="v.id">
-            {{ v.name }}
-          </option>
-        </select>
+        <div class="relative">
+          <select
+            ref="vehicleInput"
+            v-model="form.vehicleId"
+            class="w-full h-10 appearance-none rounded border border-brand-border dark:border-brand-border-dark bg-brand-bg dark:bg-brand-surface-dark pl-3 pr-8 py-2"
+          >
+            <option :value="null">— none —</option>
+            <option v-for="v in vehicles" :key="v.id" :value="v.id">
+              {{ v.name }}
+            </option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-brand-muted dark:text-brand-muted-dark">
+            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-body font-medium uppercase tracking-widest text-[11px] text-brand-muted dark:text-brand-muted-dark mb-1">
+          Performance Index (PI)
+        </label>
+        <div class="flex gap-2">
+          <div
+            class="w-10 h-10 shrink-0 flex items-center justify-center rounded font-display font-black text-white text-base"
+            :style="{ backgroundColor: piColor }"
+          >{{ piClass }}</div>
+          <input
+            :value="form.performanceIndex"
+            type="text"
+            inputmode="numeric"
+            class="w-full rounded border border-brand-border dark:border-brand-border-dark bg-brand-bg dark:bg-brand-surface-dark px-3 py-2"
+            placeholder="0"
+            @input="form.performanceIndex = $event.target.value.replace(/[^0-9]/g, '')"
+          />
+        </div>
       </div>
 
       <div>
@@ -45,7 +72,7 @@
 
       <div>
         <label class="block font-body font-medium uppercase tracking-widest text-[11px] text-brand-muted dark:text-brand-muted-dark mb-1">
-          Lap time<template v-if="goalLapTimeMs"> (Goal - {{ formatMsToTime(goalLapTimeMs) }})</template>
+          Lap time<template v-if="goalLapTimeMs"> (🎯 {{ formatMsToTime(goalLapTimeMs) }})</template>
         </label>
         <LapTimeInput v-model="form.lapTimeMs" />
       </div>
@@ -98,6 +125,7 @@
 <script>
 import LapTimeInput from './LapTimeInput.vue'
 import { formatMsToTime } from '../utils/timeFormat.js'
+import { piInfo } from '../utils/piInfo.js'
 
 function nowLocalIsoMinute() {
   const d = new Date()
@@ -113,6 +141,7 @@ function emptyForm() {
     place: '',
     lapTimeMs: null,
     totalTimeMs: null,
+    performanceIndex: '0',
     notes: ''
   }
 }
@@ -122,6 +151,7 @@ export default {
   components: { LapTimeInput },
   props: {
     vehicles: { type: Array, required: true },
+    vehiclePiMap: { type: Object, default: () => ({}) },
     defaults: { type: Object, default: () => ({}) },
     lastRace: { type: Object, default: null },
     goalLapTimeMs: { type: Number, default: null },
@@ -138,6 +168,22 @@ export default {
   computed: {
     canDuplicateLast() {
       return Boolean(this.lastRace)
+    },
+    piClass() {
+      return piInfo(this.form.performanceIndex).cls
+    },
+    piColor() {
+      return piInfo(this.form.performanceIndex).color
+    }
+  },
+  watch: {
+    'form.vehicleId': {
+      handler(vehicleId) {
+        if (!vehicleId) return
+        const pi = this.vehiclePiMap[vehicleId]
+        if (pi != null) this.form.performanceIndex = String(pi)
+      },
+      immediate: true
     }
   },
   mounted() {
@@ -175,16 +221,19 @@ export default {
       this.form.place = this.lastRace.place || ''
       this.form.lapTimeMs = this.lastRace.lap_time_ms || null
       this.form.totalTimeMs = this.lastRace.total_time_ms || null
+      this.form.performanceIndex = this.lastRace.performance_index != null ? String(this.lastRace.performance_index) : '0'
       this.form.notes = this.lastRace.notes || ''
     },
     onSubmit() {
       this.errorMessage = ''
+      const pi = parseInt(this.form.performanceIndex, 10)
       const payload = {
         datetime: new Date(this.form.datetime).toISOString(),
         vehicle_id: this.form.vehicleId || null,
         place: this.form.place || null,
         lap_time_ms: this.form.lapTimeMs,
         total_time_ms: this.form.totalTimeMs,
+        performance_index: isNaN(pi) ? null : pi,
         notes: this.form.notes || null
       }
       this.$emit('submit', payload)

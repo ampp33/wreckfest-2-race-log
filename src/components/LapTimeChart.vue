@@ -105,7 +105,7 @@ export default {
           pointBorderWidth: 2,
           tension: 0.35,
           fill: false,
-          spanGaps: false
+          spanGaps: true
         }
       })
 

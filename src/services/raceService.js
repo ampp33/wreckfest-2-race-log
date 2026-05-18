@@ -1,7 +1,7 @@
 import { supabase } from './supabase.js'
 
 const RACE_COLUMNS =
-  'id, datetime, track_variation_id, vehicle_id, place, lap_time_ms, total_time_ms, notes, created_at'
+  'id, datetime, track_variation_id, vehicle_id, place, lap_time_ms, total_time_ms, performance_index, notes, created_at'
 
 export async function getRacesByVariation(variationId) {
   const { data, error } = await supabase
@@ -47,6 +47,21 @@ export async function updateRace(id, patch) {
 export async function deleteRace(id) {
   const { error } = await supabase.from('races').delete().eq('id', id)
   if (error) throw error
+}
+
+export async function getVehiclePiMap() {
+  const { data, error } = await supabase
+    .from('races')
+    .select('vehicle_id, performance_index')
+    .not('vehicle_id', 'is', null)
+    .not('performance_index', 'is', null)
+    .order('datetime', { ascending: false })
+  if (error) throw error
+  const map = {}
+  for (const { vehicle_id, performance_index } of data || []) {
+    if (!(vehicle_id in map)) map[vehicle_id] = performance_index
+  }
+  return map
 }
 
 export async function bulkInsertRaces(races, userId) {

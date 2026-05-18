@@ -78,6 +78,8 @@ create table if not exists wreckfest2.races (
 -- For existing installs: drop the tuning column if it exists.
 alter table wreckfest2.races drop column if exists tuning;
 
+alter table wreckfest2.races add column if not exists performance_index integer;
+
 create index if not exists races_user_track_idx
     on wreckfest2.races (user_id, track_variation_id, datetime desc);
 

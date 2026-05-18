@@ -37,6 +37,7 @@
               <th class="px-4 py-2 font-medium">Date</th>
               <th class="px-4 py-2 font-medium">Track / Variation</th>
               <th class="px-4 py-2 font-medium">Vehicle</th>
+              <th class="px-4 py-2 font-medium">PI</th>
               <th class="px-4 py-2 font-medium text-right">Place</th>
               <th class="px-4 py-2 font-medium text-right">Lap time</th>
               <th class="px-4 py-2 font-medium text-right">Total time</th>
@@ -64,6 +65,13 @@
               </td>
               <td class="px-4 py-2 text-brand-secondary dark:text-brand-secondary-dark">
                 {{ race.vehicleName }}
+              </td>
+              <td class="px-4 py-2 whitespace-nowrap">
+                <template v-if="race.performance_index != null">
+                  <span class="font-bold" :style="{ color: piInfo(race.performance_index).color }">{{ piInfo(race.performance_index).cls }}</span>
+                  {{ race.performance_index }}
+                </template>
+                <span v-else class="text-brand-muted dark:text-brand-muted-dark">—</span>
               </td>
               <td class="px-4 py-2 text-right tabular-nums">
                 {{ race.place != null ? race.place : '—' }}
@@ -106,6 +114,7 @@ import { getAllRaces } from '../services/raceService.js'
 import { getTracks } from '../services/trackService.js'
 import { getVehicles } from '../services/vehicleService.js'
 import { formatMsToTime } from '../utils/timeFormat.js'
+import { piInfo } from '../utils/piInfo.js'
 import { pushToast } from '../stores/toastStore.js'
 
 export default {
@@ -171,6 +180,7 @@ export default {
     }
   },
   methods: {
+    piInfo,
     formatMs(ms) {
       return formatMsToTime(ms)
     },

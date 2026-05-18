@@ -5,6 +5,13 @@
         {{ formattedDate }}
       </td>
       <td class="py-2 pr-3 text-brand-secondary dark:text-brand-secondary-dark">{{ vehicleName }}</td>
+      <td class="py-2 pr-3 whitespace-nowrap">
+        <template v-if="race.performance_index != null">
+          <span class="font-bold" :style="{ color: piInfo(race.performance_index).color }">{{ piInfo(race.performance_index).cls }}</span>
+          {{ race.performance_index }}
+        </template>
+        <span v-else class="text-brand-muted dark:text-brand-muted-dark">—</span>
+      </td>
       <td class="py-2 pr-3 text-center text-brand-secondary dark:text-brand-secondary-dark">{{ race.place || '—' }}</td>
       <td class="py-2 pr-3 font-mono text-brand-text dark:text-brand-text-dark">{{ formatLap }}</td>
       <td class="py-2 pr-3 font-mono" :class="deltaColor">{{ deltaLabel }}</td>
@@ -36,7 +43,7 @@
       </td>
     </template>
 
-    <td v-else colspan="8" class="p-5 bg-brand-surface dark:bg-brand-surface-dark">
+    <td v-else colspan="9" class="p-5 bg-brand-surface dark:bg-brand-surface-dark">
       <RaceForm
         :vehicles="vehicles"
         :defaults="editDefaults"
@@ -52,6 +59,7 @@
 <script>
 import RaceForm from './RaceForm.vue'
 import { formatMsToTime, formatDelta } from '../utils/timeFormat.js'
+import { piInfo } from '../utils/piInfo.js'
 
 function toLocalIsoMinute(isoString) {
   const d = new Date(isoString)
@@ -117,11 +125,13 @@ export default {
         place: this.race.place || '',
         lapTime: this.race.lap_time_ms != null ? formatMsToTime(this.race.lap_time_ms) : '',
         totalTime: this.race.total_time_ms != null ? formatMsToTime(this.race.total_time_ms) : '',
+        performanceIndex: this.race.performance_index != null ? String(this.race.performance_index) : '0',
         notes: this.race.notes || ''
       }
     }
   },
   methods: {
+    piInfo,
     async onSave(payload) {
       this.saving = true
       try {
