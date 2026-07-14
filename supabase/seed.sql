@@ -33,6 +33,8 @@ insert into wreckfest2.tracks (name, slug) values ('Scrapyard', 'scrapyard') on 
 insert into wreckfest2.tracks (name, slug) values ('Speedway', 'speedway') on conflict (slug) do update set name = excluded.name;
 insert into wreckfest2.tracks (name, slug) values ('UK Banger', 'uk-banger-1') on conflict (slug) do update set name = excluded.name;
 
+insert into wreckfest2.tracks (name, slug) values ('Mora Raceway', 'mora-raceway') on conflict (slug) do update set name = excluded.name;
+
 -- Track variations ------------------------------------------------------
 insert into wreckfest2.track_variations (track_id, name, slug) select id, 'Main circuit', 'main-circuit' from wreckfest2.tracks where slug = 'cannonhill' on conflict (track_id, slug) do update set name = excluded.name;
 insert into wreckfest2.track_variations (track_id, name, slug) select id, 'Main circuit reverse', 'main-circuit-reverse' from wreckfest2.tracks where slug = 'cannonhill' on conflict (track_id, slug) do update set name = excluded.name;
@@ -60,6 +62,11 @@ insert into wreckfest2.track_variations (track_id, name, slug) select id, 'Inner
 insert into wreckfest2.track_variations (track_id, name, slug) select id, 'Figure 8', 'figure-8' from wreckfest2.tracks where slug = 'speedway' on conflict (track_id, slug) do update set name = excluded.name;
 insert into wreckfest2.track_variations (track_id, name, slug) select id, 'Oval', 'oval' from wreckfest2.tracks where slug = 'uk-banger-1' on conflict (track_id, slug) do update set name = excluded.name;
 insert into wreckfest2.track_variations (track_id, name, slug) select id, 'Figure 8', 'figure-8' from wreckfest2.tracks where slug = 'uk-banger-1' on conflict (track_id, slug) do update set name = excluded.name;
+
+insert into wreckfest2.track_variations (track_id, name, slug) select id, 'Full Circuit', 'full-circuit' from wreckfest2.tracks where slug = 'mora-raceway' on conflict (track_id, slug) do update set name = excluded.name;
+insert into wreckfest2.track_variations (track_id, name, slug) select id, 'High-Speed Oval', 'high-speed-oval' from wreckfest2.tracks where slug = 'mora-raceway' on conflict (track_id, slug) do update set name = excluded.name;
+insert into wreckfest2.track_variations (track_id, name, slug) select id, 'Suicide Circuit', 'suicide-circuit' from wreckfest2.tracks where slug = 'mora-raceway' on conflict (track_id, slug) do update set name = excluded.name;
+insert into wreckfest2.track_variations (track_id, name, slug) select id, 'Sprint Circuit', 'sprint-circuit' from wreckfest2.tracks where slug = 'mora-raceway' on conflict (track_id, slug) do update set name = excluded.name;
 
 -- Vehicles --------------------------------------------------------------
 insert into wreckfest2.vehicles (name) values ('Bravion') on conflict (name) do nothing;
