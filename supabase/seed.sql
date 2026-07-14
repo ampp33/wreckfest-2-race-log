@@ -86,4 +86,10 @@ insert into wreckfest2.vehicles (name) values ('Rocket') on conflict (name) do n
 insert into wreckfest2.vehicles (name) values ('School Bus') on conflict (name) do nothing;
 insert into wreckfest2.vehicles (name) values ('Switchback') on conflict (name) do nothing;
 
+insert into wreckfest2.vehicles (name) values ('Bullet') on conflict (name) do nothing;
+insert into wreckfest2.vehicles (name) values ('Half a Crusader') on conflict (name) do nothing;
+insert into wreckfest2.vehicles (name) values ('Jackal') on conflict (name) do nothing;
+insert into wreckfest2.vehicles (name) values ('Stahlwagen') on conflict (name) do nothing;
+insert into wreckfest2.vehicles (name) values ('Valken') on conflict (name) do nothing;
+
 commit;
